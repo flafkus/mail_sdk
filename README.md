@@ -2,50 +2,80 @@
 
 ## Description
 
-This is a Pypi package provide a simple way to get a temp email address, and receive the email. In fact, it is a simple wrapper of [mail.gw](https://mail.gw/en/).
+Thank you to [yxzlwz](https://github.com/yxzlwz) for creating the original mail_gw package!
 
-The project is released on [pypi.org](https://pypi.org/), you can view it at [https://pypi.org/project/mail-gw/](https://pypi.org/project/mail-gw/).
+This is a Python package providing a simple way to create & receive temporary emails. It includes wrappers for both [mail.gw](https://mail.gw/en/) and [mail.tm](https://mail.tm/en/).
 
 ## Install
 
-Just install it with pip as usual.
+Install from the local directory:
 
 ```bash
-pip3 install mail_gw
+pip install .
+```
+
+Or install in editable mode for development:
+
+```bash
+pip install -e .
 ```
 
 ## Usage
 
 ```python
-# Import the module
+# Import from mail_gw
 from mail_gw import Account
 
-# Create a account
+# Or import from mail_tm
+from mail_tm import Account
+
+# Create an account
 a = Account(address='test@bluebasketbooks.com.au', password='123456')  # Use the domain listed on the website
-a = Account(address='test', password='123456')  # Only prefix, it will randomly choose a domain
+a = Account(address='test', password='123456')  # Prefix only, it will randomly choose a domain
 a = Account()  # Use both random address and password
 
-# See the address and password
+# View the address and password
 print(a.address, a.password)
-# See the details of the account
+# View the account details
 print(a.json())
 
-# While initializing, the account will be registered on mail.gw and the token will be gotten automatically.
-# If it is necessary, you can run these codes to register and get the token manually.
-# a.register()
-# a.get_token()
-# Both of the above steps will return the details of the account.
+# During initialisation, the account will be registered on mail.gw or mail.tm and the token will be generated automatically.
+# If necessary, you can run this code to register and get the token manually.
+a.register()
+a.get_token()
+# Both of the above steps will return the account details.
 
-# Check the email's inbox
+# Check the email inbox
 print(a.get_message(latest=0))
 # latest: 0 means the latest email, 1 means the second latest email, and so on.
-# If there is no email, it will raise IndexError.
+# If there are no emails, it will raise IndexError.
 ```
 
-## Issues
+### Using Proxies
 
-Because of "the Great Wall of China's Internet", the API may not available in some areas of China.
+You can use proxies in two ways:
 
-## Contact
+```python
+# Method 1: Pass proxy directly to Account
+from mail_gw import Account
 
-[mail@yixiangzhilv.com](mailto:mail@yixiangzhilv.com)
+proxies = {
+    'http': 'http://proxy.example.com:8080',
+    'https': 'https://proxy.example.com:8080'
+}
+
+a = Account(proxies=proxies)
+
+# Method 2: Set global proxy for all accounts
+from mail_gw import set_proxies, Account
+
+proxies = {
+    'http': 'http://proxy.example.com:8080',
+    'https': 'https://proxy.example.com:8080'
+}
+
+set_proxies(proxies)
+a = Account()  # Will use the global proxy
+```
+
+Both `mail_gw` and `mail_tm` modules support proxies the same way.

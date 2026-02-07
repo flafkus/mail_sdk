@@ -18,7 +18,7 @@ def set_proxies(proxies):
 def get_domain_list(proxies=None):
     global DOMAINS
     px = proxies if proxies is not None else PROXIES
-    r = get('https://api.mail.gw/domains?page=1', timeout=TIMEOUT, proxies=px).json()
+    r = get('https://api.mail.tm/domains?page=1', timeout=TIMEOUT, proxies=px).json()
     for i in r['hydra:member']:
         DOMAINS.append(i['domain'])
 
@@ -54,7 +54,7 @@ class Account:
 
     def register(self, raise_error: bool = True):
         r = post(
-            'https://api.mail.gw/accounts',
+            'https://api.mail.tm/accounts',
             headers=self.headers,
             data=json.dumps({
                 'address': self.address,
@@ -73,7 +73,7 @@ class Account:
 
     def get_token(self):
         r = post(
-            'https://api.mail.gw/token',
+            'https://api.mail.tm/token',
             headers=self.headers,
             data=json.dumps({
                 'address': self.address,
@@ -91,7 +91,7 @@ class Account:
     def get_message(self, latest=0):
         assert latest >= 0, IndexError('latest must be >= 0')
         r = get(
-            'https://api.mail.gw/messages',
+            'https://api.mail.tm/messages',
             headers=self.headers,
             params={
                 'page': 1
@@ -105,7 +105,7 @@ class Account:
                 f'No message found! There are only {len(id)} messages.')
         id = id[latest]['id']
         r = get(
-            'https://api.mail.gw/messages/' + id,
+            'https://api.mail.tm/messages/' + id,
             headers=self.headers,
             timeout=TIMEOUT,
             proxies=self.proxies,
@@ -114,10 +114,10 @@ class Account:
 
     def destroy(self):
         if self.id is None:
-            r = get('https://api.mail.gw/me', headers=self.headers, proxies=self.proxies).json()
+            r = get('https://api.mail.tm/me', headers=self.headers, proxies=self.proxies).json()
             self.id = r['id']
         delete(
-            'https://api.mail.gw/accounts/' + self.id,
+            'https://api.mail.tm/accounts/' + self.id,
             headers=self.headers,
             timeout=TIMEOUT,
             proxies=self.proxies,
