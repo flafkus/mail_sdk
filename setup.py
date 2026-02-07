@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='mail_sdk',
+    name='tempmail_sdk',
     version='1.0',
     description='Python SDK for mail.tm and mail.gw',
     url="https://github.com/flafkus/mail_sdk",  # Update with your repo URL
