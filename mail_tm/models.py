@@ -24,7 +24,6 @@ def get_domain_list(proxies=None):
 
 
 class Account:
-    headers = {'Content-Type': 'application/json'}
     id: str = None
     address: str = None
     password: str = None
@@ -37,6 +36,7 @@ class Account:
                  password: str = None,
                  auto_login: bool = True,
                  proxies: dict = None):
+        self.headers = {'Content-Type': 'application/json'}
         self.proxies = proxies if proxies is not None else PROXIES
         if address is None:
             address = generate_random_string()
