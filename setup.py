@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='tempmail_sdk',
-    version='1.0',
+    version='1.1',
     description='Python SDK for mail.tm and mail.gw',
     url="https://github.com/flafkus/mail_sdk",  # Update with your repo URL
     author="flafkus",  # Update with your name
@@ -15,7 +15,9 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11"
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13"
     ],
     keywords="API sdk tempmail mail.tm mail.gw",
     install_requires=["requests"],
